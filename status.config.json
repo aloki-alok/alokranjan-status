@@ -1,0 +1,68 @@
+{
+  "schemaVersion": "1.0.0",
+  "deploymentMode": "production",
+  "siteId": "alokranjan-me",
+  "displayName": "Alok Ranjan",
+  "legalName": "Alok Ranjan",
+  "locale": "en-IN",
+  "timeZone": "Asia/Kolkata",
+  "domains": {
+    "primary": "status.alokranjan.me"
+  },
+  "brand": {
+    "homeUrl": "https://alokranjan.me",
+    "logoLightPath": "./assets/favicon.svg",
+    "logoDarkPath": "./assets/favicon.svg",
+    "iconLightPath": "./assets/favicon.svg",
+    "iconDarkPath": "./assets/favicon.svg",
+    "faviconPath": "./assets/favicon.svg",
+    "logoAlt": "Alok Ranjan"
+  },
+  "presentation": {
+    "bannerVariant": "plain",
+    "statusCopy": {
+      "operational": "All systems operational",
+      "degraded": "Some systems are degraded",
+      "partialOutage": "Some services are unavailable",
+      "majorOutage": "Major service disruption",
+      "maintenance": "Maintenance in progress",
+      "unknown": "Status data is delayed"
+    },
+    "semanticColors": {
+      "operational": "#16805c",
+      "maintenance": "#2f6feb",
+      "degraded": "#a56712",
+      "outage": "#b7433c",
+      "unknown": "#65716e"
+    }
+  },
+  "monitoring": {
+    "pollIntervalSeconds": 60,
+    "staleAfterSeconds": 120,
+    "sources": [
+      {
+        "sourceId": "personal-kuma",
+        "adapter": "uptime-kuma",
+        "connection": {
+          "provider": "environment",
+          "reference": "UPTIME_KUMA_CONNECTION"
+        }
+      }
+    ]
+  },
+  "components": [
+    {
+      "componentId": "portfolio",
+      "name": "Portfolio",
+      "group": "Website",
+      "sourceId": "personal-kuma",
+      "monitorRef": "portfolio",
+      "showLatency": true
+    }
+  ],
+  "subscriptions": {
+    "enabled": false,
+    "disabledReason": "delivery-not-configured",
+    "doubleOptIn": true
+  }
+}
