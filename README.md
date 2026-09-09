@@ -32,16 +32,24 @@ The build must fail when the snapshot is absent, malformed, stale in shape, or c
 
 ## Deployment path
 
-1. Version the generic platform and pin this deployment to a reviewed platform revision.
-2. Add an external HTTPS monitor for `https://alokranjan.me/` with a 60 second interval and stable public reference `portfolio`.
-3. Implement the versioned Uptime Kuma export and the generic snapshot publisher. A failed fetch or invalid document must preserve the last known good snapshot.
-4. Generate a real `current.json` with unknown history for time before monitoring began. Never invent 100 percent uptime.
-5. Build this production site with the validated snapshot.
-6. Deploy first to an isolated preview hostname. The status read path must not depend on the Cloudflare Worker serving the portfolio.
-7. Verify page routes, asset decoding, schema validation, freshness, delayed-data behavior, recovery, and rollback.
-8. Burn in the preview before requesting approval for `status.alokranjan.me` DNS.
+1. Check out the reviewed `uptime-status` platform revision.
+2. Install the pinned Bun dependencies with `bun install --frozen-lockfile`.
+3. Set `UPTIME_STATUS_PLATFORM` only when the platform is not at the default local path.
+4. Run `bun run build`. The build validates this site's contract, performs one real HTTPS check, and creates the production artifact.
+5. Run `bun run check` to verify the exact Wrangler bundle without uploading it.
+6. Seed `sites/alokranjan-me/current.json` in the configured KV namespace from `dist/current.json`.
+7. Run `bun run deploy` and verify the isolated `workers.dev` URL.
+8. Attach `status.alokranjan.me` only after HTTP, browser, static asset, freshness, latency, and rollback checks pass.
 
-The intended live read path is a private versioned S3 origin behind CloudFront. It provides a separate failure domain from the portfolio's Cloudflare Worker. DNS and certificate setup are intentionally deferred until the raw CloudFront preview is verified.
+The personal deployment uses a separate Cloudflare Worker with its own status state and one-minute scheduled probe. It does not share application code or runtime state with the portfolio Worker.
+
+## Email updates
+
+Email updates are intentionally off. The personal deployment will use Resend after subscriber storage, double opt-in, abuse controls, suppression, unsubscribe, retries, and a real canary delivery are complete. Store the Resend API key as a managed secret reference, never in Git or `wrangler.jsonc`.
+
+## Rollback
+
+List recent Worker versions with `bunx wrangler versions list`. Roll back the Worker with `bunx wrangler rollback <version-id>`. The KV current snapshot is retained separately, so a Worker rollback does not erase monitoring history. If the custom domain is unhealthy, detach its route and keep the verified `workers.dev` deployment available while investigating.
 
 ## Release gates
 
@@ -50,3 +58,4 @@ The intended live read path is a private versioned S3 origin behind CloudFront. 
 - No status claim after the last observation becomes older than 120 seconds.
 - No DNS or public launch without Ryu's explicit approval.
 - Subscriptions remain disabled until delivery, confirmation, suppression, and unsubscribe are complete and tested end to end.
+- Personal email delivery will use Resend through a secret reference. No API key belongs in this repository.

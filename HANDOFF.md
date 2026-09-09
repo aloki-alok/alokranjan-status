@@ -15,7 +15,9 @@ Updated: 2026-09-09
 - Light, dark, and exact 390 px previews were visually inspected. The page has one flat canvas, no header logo, aligned top-level content, three public legend categories, a full-width latency card, and no document-level horizontal overflow.
 - The public repository is `aloki-alok/alokranjan-status` at initial commit `86f5c99`.
 - Main prevents force pushes and deletion, requires linear history, and requires resolved review conversations.
-- No monitor, cloud resource, certificate, deployment, or DNS record has been created yet.
+- The Cloudflare deployment manifest and guarded Bun build pipeline are implemented locally.
+- Dedicated KV namespace `alokranjan-status-state` exists and the first validated snapshot is seeded under `sites/alokranjan-me/current.json`.
+- No Worker deployment or DNS record has been created yet.
 
 ## Verified facts
 
@@ -26,18 +28,19 @@ Updated: 2026-09-09
 
 ## Open blockers
 
-- The offline Uptime Kuma 2.2 SQLite history extractor exists, but this new personal site has no legacy history to import and the live HTTPS adapter does not exist.
-- The versioned public-safe Kuma export does not exist yet.
-- The snapshot publisher and independent AWS read-path infrastructure do not exist yet.
-- There is no real validated `current.json` for this site.
+- This new personal site has no legacy history to import.
+- The direct HTTPS publisher exists and the personal runtime will use a separate Cloudflare Worker.
+- The dedicated KV namespace ID is recorded in `wrangler.jsonc`. It is deployment metadata, not a secret.
+- The exact platform commit is published. Quality and Browser CI are green on run `34368680427`, attempt 2.
 
 Until those blockers close, only the local visual preview is truthful. Do not deploy it as a real status service.
 
 ## Next executable work
 
-1. Implement and test the generic Kuma export and adapter in their owning repositories.
-2. Implement the last-known-good snapshot publisher and minimal private S3 plus CloudFront preview stack.
-3. Produce the first real snapshot and run failure injection before asking for DNS approval.
+1. Commit and publish the verified deployment configuration, then require its hosted Deployment check on main.
+2. Rebuild and seed from the exact published tree, then deploy the separate Cloudflare Worker to its isolated `workers.dev` URL.
+3. Run HTTP, browser, asset, security-header, and scheduled-refresh canaries before activating `status.alokranjan.me`.
+4. Add Resend only after subscriber persistence, suppression, and unsubscribe pass end to end.
 
 ## Verification log
 

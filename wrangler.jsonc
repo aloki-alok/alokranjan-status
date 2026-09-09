@@ -1,0 +1,35 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "alokranjan-status",
+  "main": "./dist/worker/index.js",
+  "compatibility_date": "2026-09-09",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "preview_urls": true,
+  "assets": {
+    "directory": "./dist/site",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  },
+  "kv_namespaces": [
+    {
+      "binding": "STATUS",
+      "id": "8bb2fd2c7ff941d0aa17b32c25afed2b"
+    }
+  ],
+  "vars": {
+    "SITE_ID": "alokranjan-me",
+    "TARGET_URL": "https://alokranjan.me/",
+    "COMPONENT_SLUG": "portfolio",
+    "COMPONENT_NAME": "Portfolio",
+    "COMPONENT_GROUP": "Website",
+    "SHOW_LATENCY": "true"
+  },
+  "triggers": {
+    "crons": ["* * * * *"]
+  },
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  }
+}

@@ -4,3 +4,4 @@
 !.env.example
 current.json
 dist/
+node_modules/
