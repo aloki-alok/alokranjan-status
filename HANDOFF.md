@@ -13,7 +13,9 @@ Updated: 2026-09-09
 - Both site contracts pass the shared strict validator.
 - The visual preview builds successfully against the generic platform.
 - Light, dark, and exact 390 px previews were visually inspected. The page has one flat canvas, no header logo, aligned top-level content, three public legend categories, a full-width latency card, and no document-level horizontal overflow.
-- The repository is ready for its first public commit. No monitor, cloud resource, certificate, deployment, or DNS record has been created yet.
+- The public repository is `aloki-alok/alokranjan-status` at initial commit `86f5c99`.
+- Main prevents force pushes and deletion, requires linear history, and requires resolved review conversations.
+- No monitor, cloud resource, certificate, deployment, or DNS record has been created yet.
 
 ## Verified facts
 
