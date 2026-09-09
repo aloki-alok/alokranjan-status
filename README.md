@@ -2,6 +2,8 @@
 
 Personal deployment configuration for the reusable `uptime-status` platform. The first public component is the portfolio at `https://alokranjan.me/`.
 
+The live page is [status.alokranjan.me](https://status.alokranjan.me). It checks the portfolio at least once every 60 seconds while the page is open, shows delayed data honestly, and keeps gaps in monitoring history visible rather than inventing uptime.
+
 The checked-in identity asset is copied from `alokranjan.me` so builds do not depend on another repository. The production and visual-preview contracts stay separate. The preview uses generated status data and must never be presented as live monitoring.
 
 ## Build the visual preview
@@ -41,7 +43,7 @@ The build must fail when the snapshot is absent, malformed, stale in shape, or c
 7. Run `bun run deploy` and verify the isolated `workers.dev` URL.
 8. Attach `status.alokranjan.me` only after HTTP, browser, static asset, freshness, latency, and rollback checks pass.
 
-The personal deployment uses a separate Cloudflare Worker with its own status state and one-minute scheduled probe. It does not share application code or runtime state with the portfolio Worker.
+The personal deployment uses a separate Cloudflare Worker with its own status state. A one-minute scheduled probe is configured, and stale reads also perform a validated probe so an open status page remains current if background scheduling is delayed. It does not share application code or runtime state with the portfolio Worker.
 
 ## Email updates
 
