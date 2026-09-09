@@ -6,6 +6,7 @@
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   "workers_dev": true,
   "preview_urls": true,
+  "routes": [{ "pattern": "status.alokranjan.me", "custom_domain": true }],
   "assets": {
     "directory": "./dist/site",
     "binding": "ASSETS",
