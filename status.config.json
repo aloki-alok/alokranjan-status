@@ -41,12 +41,10 @@
     "staleAfterSeconds": 120,
     "sources": [
       {
-        "sourceId": "personal-kuma",
-        "adapter": "uptime-kuma",
-        "connection": {
-          "provider": "environment",
-          "reference": "UPTIME_KUMA_CONNECTION"
-        }
+        "sourceId": "portfolio-https",
+        "adapter": "https",
+        "url": "https://alokranjan.me/",
+        "timeoutMs": 10000
       }
     ]
   },
@@ -55,8 +53,8 @@
       "componentId": "portfolio",
       "name": "Portfolio",
       "group": "Website",
-      "sourceId": "personal-kuma",
-      "monitorRef": "portfolio",
+      "sourceId": "portfolio-https",
+      "monitorRef": "primary",
       "showLatency": true
     }
   ],
