@@ -1,4 +1,5 @@
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { resolve } from "node:path";
 import { deployConfigPath, readJson, run, siteRoot } from "./shared";
 
@@ -17,8 +18,10 @@ for (const path of [
   }
 }
 
-await run(
-  ["bunx", "wrangler", "deploy", "--dry-run", "--outdir", "/private/tmp/alokranjan-status-dry-run"],
-  siteRoot,
-);
+const dryRunDirectory = mkdtempSync(resolve(tmpdir(), "alokranjan-status-dry-run-"));
+try {
+  await run(["bunx", "wrangler", "deploy", "--dry-run", "--outdir", dryRunDirectory], siteRoot);
+} finally {
+  rmSync(dryRunDirectory, { recursive: true, force: true });
+}
 console.log("Deployment artifact verified");
