@@ -30,7 +30,7 @@ jobs:
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
           repository: aloki-alok/uptime-status
-          ref: 1aaef91dfc52b855395fdee80c37a878af9152e6
+          ref: 23bbd89ee06df67b755654ffe92bae3131570dd9
           path: platform
 
       - name: Install Bun

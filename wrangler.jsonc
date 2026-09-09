@@ -23,7 +23,8 @@
     "COMPONENT_SLUG": "portfolio",
     "COMPONENT_NAME": "Portfolio",
     "COMPONENT_GROUP": "Website",
-    "SHOW_LATENCY": "true"
+    "SHOW_LATENCY": "true",
+    "POLL_INTERVAL_SECONDS": "60"
   },
   "triggers": {
     "crons": ["* * * * *"]

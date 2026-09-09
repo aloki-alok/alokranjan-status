@@ -29,6 +29,7 @@ function assertDeploymentMatchesSite() {
     COMPONENT_NAME: component.name,
     COMPONENT_GROUP: component.group,
     SHOW_LATENCY: String(component.showLatency),
+    POLL_INTERVAL_SECONDS: String(site.monitoring.pollIntervalSeconds),
   };
   if (JSON.stringify(deployment.vars) !== JSON.stringify(expected)) {
     throw new Error("Wrangler runtime variables do not match status.config.json");
